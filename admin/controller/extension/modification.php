@@ -165,7 +165,8 @@ class ControllerExtensionModification extends Controller {
 							$path = DIR_CATALOG . str_replace('../', '', substr($file, 8));
 						}
 
-						if (substr($file, 0, 5) == 'admin') {
+// 						if (substr($file, 0, 5) == 'admin') {
+						if (substr($file, 0, 5) == DIR_ADMIN) {
 							$path = DIR_APPLICATION . str_replace('../', '', substr($file, 6));
 						}
 
@@ -184,7 +185,8 @@ class ControllerExtensionModification extends Controller {
 									}
 
 									if (substr($file, 0, strlen(DIR_APPLICATION)) == DIR_APPLICATION) {
-										$key = 'admin/' . substr($file, strlen(DIR_APPLICATION));
+// 										$key = 'admin/' . substr($file, strlen(DIR_APPLICATION));
+										$key = DIR_ADMIN . '/' . substr($file, strlen(DIR_APPLICATION));
 									}
 
 									if (substr($file, 0, strlen(DIR_SYSTEM)) == DIR_SYSTEM) {

@@ -1,25 +1,34 @@
 <?php
+// SERVER
+define('SERVER_SITE', 'localhost/bench/fantasy');
+define('SERVER_DOMAIN', strtolower(SERVER_SITE));
+define('SERVER_URL', '//' . SERVER_DOMAIN . '/');
+define('SERVER_DIR', '/Users/abel/Sites/bench/fantasy/');
+
+// Admin Directory
+define('DIR_ADMIN', 'admin');
+
 // HTTP
-define('HTTP_SERVER', 'http://localhost/bench/fantasy/admin/');
-define('HTTP_CATALOG', 'http://localhost/bench/fantasy/');
+define('HTTP_SERVER', 'http:' . SERVER_URL . DIR_ADMIN . '/');
+define('HTTP_CATALOG', 'http:' . SERVER_URL);
 
 // HTTPS
-define('HTTPS_SERVER', 'http://localhost/bench/fantasy/admin/');
-define('HTTPS_CATALOG', 'http://localhost/bench/fantasy/');
+define('HTTPS_SERVER', 'http:' . SERVER_URL . DIR_ADMIN . '/');
+define('HTTPS_CATALOG', 'http:' . SERVER_URL);
 
 // DIR
-define('DIR_APPLICATION', '/Users/abel/Sites/bench/fantasy/admin/');
-define('DIR_SYSTEM', '/Users/abel/Sites/bench/fantasy/system/');
-define('DIR_LANGUAGE', '/Users/abel/Sites/bench/fantasy/admin/language/');
-define('DIR_TEMPLATE', '/Users/abel/Sites/bench/fantasy/admin/view/template/');
-define('DIR_CONFIG', '/Users/abel/Sites/bench/fantasy/system/config/');
-define('DIR_IMAGE', '/Users/abel/Sites/bench/fantasy/image/');
-define('DIR_CACHE', '/Users/abel/Sites/bench/fantasy/system/cache/');
-define('DIR_DOWNLOAD', '/Users/abel/Sites/bench/fantasy/system/download/');
-define('DIR_UPLOAD', '/Users/abel/Sites/bench/fantasy/system/upload/');
-define('DIR_LOGS', '/Users/abel/Sites/bench/fantasy/system/logs/');
-define('DIR_MODIFICATION', '/Users/abel/Sites/bench/fantasy/system/modification/');
-define('DIR_CATALOG', '/Users/abel/Sites/bench/fantasy/catalog/');
+define('DIR_APPLICATION', SERVER_DIR . DIR_ADMIN . '/');
+define('DIR_SYSTEM', SERVER_DIR . 'system/');
+define('DIR_LANGUAGE', SERVER_DIR . DIR_ADMIN . '/language/');
+define('DIR_TEMPLATE', SERVER_DIR . DIR_ADMIN . '/view/template/');
+define('DIR_CONFIG', SERVER_DIR . 'system/config/');
+define('DIR_IMAGE', SERVER_DIR . 'image/');
+define('DIR_CACHE', SERVER_DIR . 'system/cache/');
+define('DIR_DOWNLOAD', SERVER_DIR . 'system/download/');
+define('DIR_UPLOAD', SERVER_DIR . 'system/upload/');
+define('DIR_LOGS', SERVER_DIR . 'system/logs/');
+define('DIR_MODIFICATION', SERVER_DIR . 'system/modification/');
+define('DIR_CATALOG', SERVER_DIR . 'catalog/');
 
 // DB
 define('DB_DRIVER', 'mysqli');

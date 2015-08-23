@@ -168,7 +168,8 @@ class ControllerExtensionInstaller extends Controller {
 							// Compare admin files
 							$file = DIR_APPLICATION . substr($zip_name, 13);
 
-							if (is_file($file) && substr($zip_name, 0, 13) == 'upload/admin/') {
+// 							if (is_file($file) && substr($zip_name, 0, 13) == 'upload/admin/') {
+							if (is_file($file) && substr($zip_name, 0, 13) == 'upload/' . DIR_ADMIN . '/') {
 								$json['overwrite'][] = substr($zip_name, 7);
 							}
 
@@ -308,7 +309,8 @@ class ControllerExtensionInstaller extends Controller {
 							// Upload everything in the upload directory
 							// Many people rename their admin folder for security purposes which I believe should be an option during installation just like setting the db prefix.
 							// the following code would allow you to change the name of the following directories and any extensions installed will still go to the right directory.
-							if (substr($destination, 0, 5) == 'admin') {
+// 							if (substr($destination, 0, 5) == 'admin') {
+							if (substr($destination, 0, 5) == DIR_ADMIN) {
 								$destination = basename(DIR_APPLICATION) . substr($destination, 5);
 							}
 
