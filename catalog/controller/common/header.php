@@ -2,6 +2,67 @@
 class ControllerCommonHeader extends Controller {
 	public function index() {
 		$data['title'] = $this->document->getTitle();
+		
+		// New theme start
+		if ($this->config->get('cosyone_use_custom_font')) {
+			$this->document->addStyle('//fonts.googleapis.com/css?family=' . $this->config->get('cosyone_font1_import'));
+			$this->document->addStyle('//fonts.googleapis.com/css?family=' . $this->config->get('cosyone_font2_import'));
+		} else {
+			$this->document->addStyle('//fonts.googleapis.com/css?family=Roboto:300,400,500,600');
+			$this->document->addStyle('//fonts.googleapis.com/css?family=Roboto+Slab:300,400,600,700');
+		}
+		$data['cosyone_styles'] = $this->load->controller('common/cosyone_styles');
+		$data['cosyone_cookie'] = $this->load->controller('common/cosyone_cookie');
+		$data['header_login'] = $this->load->controller('common/header_login');
+		$data['header_wishlist_compare'] = $this->load->controller('common/header_wishlist_compare');
+		$data['cosyone_default_product_style'] = $this->config->get('cosyone_default_product_style');
+		$data['cosyone_use_custom'] = $this->config->get('cosyone_use_custom');
+		$data['cosyone_container_layout'] = $this->config->get('cosyone_container_layout');
+		$data['cosyone_use_breadcrumb'] = $this->config->get('cosyone_use_breadcrumb');
+		$data['cosyone_menu_sticky'] = $this->config->get('cosyone_menu_sticky');
+		$data['cosyone_menu_border'] = $this->config->get('cosyone_menu_border');
+		$data['cosyone_header_style'] = $this->config->get('cosyone_header_style');
+		$data['cosyone_header_search'] = $this->config->get('cosyone_header_search');
+		$data['cosyone_menu_mega_second_thumb'] = $this->config->get('cosyone_menu_mega_second_thumb');
+		$data['cosyone_menu_block_width'] = $this->config->get('cosyone_menu_block_width');
+		$data['cosyone_custom_menu_block'] = $this->config->get('cosyone_custom_menu_block');
+		$data['cosyone_custom_menu_url1'] = $this->config->get('cosyone_custom_menu_url1');
+		$data['cosyone_custom_menu_url2'] = $this->config->get('cosyone_custom_menu_url2');
+		$cosyone_top_promo = $this->config->get('cosyone_top_promo_message');
+		if(empty($cosyone_top_promo[$this->language->get('code')])) {
+			$data['cosyone_top_promo_message'] = false;
+		} else if (isset($cosyone_top_promo[$this->language->get('code')])) {
+			$data['cosyone_top_promo_message'] = html_entity_decode($cosyone_top_promo[$this->language->get('code')], ENT_QUOTES, 'UTF-8');
+		}
+		$cosyone_menu_block_title = $this->config->get('cosyone_custom_menu_block_title');
+		if(empty($cosyone_menu_block_title[$this->language->get('code')])) {
+			$data['cosyone_custom_menu_block_title'] = false;
+		} else if (isset($cosyone_menu_block_title[$this->language->get('code')])) {
+			$data['cosyone_custom_menu_block_title'] = html_entity_decode($cosyone_menu_block_title[$this->language->get('code')], ENT_QUOTES, 'UTF-8');
+		}
+		$cosyone_menu_custom_block = $this->config->get('cosyone_menu_custom_block_content');
+		if(empty($cosyone_menu_custom_block[$this->language->get('code')])) {
+			$data['cosyone_menu_custom_block_content'] = false;
+		} else if (isset($cosyone_menu_custom_block[$this->language->get('code')])) {
+			$data['cosyone_menu_custom_block_content'] = html_entity_decode($cosyone_menu_custom_block[$this->language->get('code')], ENT_QUOTES, 'UTF-8');
+		}
+		$cosyone_menu_custom_link1 = $this->config->get('cosyone_custom_menu_title1');
+		if(empty($cosyone_menu_custom_link1[$this->language->get('code')])) {
+			$data['cosyone_custom_menu_title1'] = false;
+		} else if (isset($cosyone_menu_custom_link1[$this->language->get('code')])) {
+			$data['cosyone_custom_menu_title1'] = html_entity_decode($cosyone_menu_custom_link1[$this->language->get('code')], ENT_QUOTES, 'UTF-8');
+		}
+		$cosyone_menu_custom_link2 = $this->config->get('cosyone_custom_menu_title2');
+		if(empty($cosyone_menu_custom_link2[$this->language->get('code')])) {
+			$data['cosyone_custom_menu_title2'] = false;
+		} else if (isset($cosyone_menu_custom_link2[$this->language->get('code')])) {
+			$data['cosyone_custom_menu_title2'] = html_entity_decode($cosyone_menu_custom_link2[$this->language->get('code')], ENT_QUOTES, 'UTF-8');
+		}
+		$data['cosyone_show_home_icon'] = $this->config->get('cosyone_show_home_icon');
+		$data['cosyone_max_width'] = $this->config->get('cosyone_max_width');
+		$data['cosyone_use_responsive'] = $this->config->get('cosyone_use_responsive');
+		$data['cosyone_header_cart'] = $this->config->get('cosyone_header_cart');
+		// New theme end
 
 		if ($this->request->server['HTTPS']) {
 			$server = $this->config->get('config_ssl');
@@ -37,6 +98,11 @@ class ControllerCommonHeader extends Controller {
 		} else {
 			$data['logo'] = '';
 		}
+		
+		// New theme start
+		$this->load->language('common/cosyone');
+		$data['cosyone_text_mobile_menu'] = $this->language->get('cosyone_text_mobile_menu');
+		// New theme end
 
 		$this->load->language('common/header');
 
@@ -92,36 +158,101 @@ class ControllerCommonHeader extends Controller {
 
 		$data['categories'] = array();
 
-		$categories = $this->model_catalog_category->getCategories(0);
+// 		$categories = $this->model_catalog_category->getCategories(0);
 
-		foreach ($categories as $category) {
-			if ($category['top']) {
-				// Level 2
-				$children_data = array();
+// 		foreach ($categories as $category) {
+// 			if ($category['top']) {
+// 				// Level 2
+// 				$children_data = array();
 
-				$children = $this->model_catalog_category->getCategories($category['category_id']);
+// 				$children = $this->model_catalog_category->getCategories($category['category_id']);
 
-				foreach ($children as $child) {
-					$filter_data = array(
-						'filter_category_id'  => $child['category_id'],
-						'filter_sub_category' => true
-					);
+// 				foreach ($children as $child) {
+// 					$filter_data = array(
+// 						'filter_category_id'  => $child['category_id'],
+// 						'filter_sub_category' => true
+// 					);
 
-					$children_data[] = array(
-						'name'  => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : ''),
-						'href'  => $this->url->link('product/category', 'path=' . $category['category_id'] . '_' . $child['category_id'])
+// 					$children_data[] = array(
+// 						'name'  => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : ''),
+// 						'href'  => $this->url->link('product/category', 'path=' . $category['category_id'] . '_' . $child['category_id'])
+// 					);
+// 				}
+
+// 				// Level 1
+// 				$data['categories'][] = array(
+// 					'name'     => $category['name'],
+// 					'children' => $children_data,
+// 					'column'   => $category['column'] ? $category['column'] : 1,
+// 					'href'     => $this->url->link('product/category', 'path=' . $category['category_id'])
+// 				);
+// 			}
+// 		}
+
+		// New theme start
+		if (isset($this->request->get['path'])) {
+			$parts = explode('_', (string)$this->request->get['path']);
+		} else {
+			$parts = array();
+		}
+		
+		if (isset($parts[0])) {
+			$data['category_1_id'] = $parts[0];
+		} else {
+			$data['category_1_id'] = 0;
+		}
+			
+		$categories_1 = $this->model_catalog_category->getCategories(0);
+		$this->load->model('tool/image');
+		foreach ($categories_1 as $category_1) {
+			if ($category_1['top']) {
+				$level_2_data = array();
+				$categories_2 = $this->model_catalog_category->getCategories($category_1['category_id']);
+				foreach ($categories_2 as $category_2) {
+					$level_3_data = array();
+		
+					// Third level
+					$categories_3 = $this->model_catalog_category->getCategories($category_2['category_id']);
+		
+					foreach ($categories_3 as $category_3) {
+							
+						$total = $this->model_catalog_product->getTotalProducts(array('filter_category_id'  => $category_3['category_id']));
+		
+						$level_3_data[] = array(
+								'name' => $category_3['name'] .($this->config->get('config_product_count') ?  ' (' . $total . ')' : ''),
+								'href' => $this->url->link('product/category', 'path=' . $category_1['category_id'] . '_' . $category_2['category_id'] . '_' . $category_3['category_id'])
+						);
+					}
+		
+					// Second level
+					$categories_2 = $this->model_catalog_category->getCategories(0);
+		
+					$total = $this->model_catalog_product->getTotalProducts(array('filter_category_id'  => $category_2['category_id'], 'filter_sub_category' => true));
+		
+					if ($category_2['image']) {
+						$category_2_image = $this->model_tool_image->resize($category_2['image'], $this->config->get('cosyone_menu_mega_second_image_w'), $this->config->get('cosyone_menu_mega_second_image_h'));
+					} else {
+						$category_2_image = '';
+					}
+					$level_2_data[] = array(
+							'name'    	=> $category_2['name']  .($this->config->get('config_product_count') ?  '<span>' . ' (' . $total . ')' . '</span>' : ''),
+							'thumb' 	=> $category_2_image,
+							'children'	=> $level_3_data,
+							'href'    	=> $this->url->link('product/category', 'path=' . $category_1['category_id'] . '_' . $category_2['category_id'])
 					);
 				}
-
-				// Level 1
+					
+				// First level
 				$data['categories'][] = array(
-					'name'     => $category['name'],
-					'children' => $children_data,
-					'column'   => $category['column'] ? $category['column'] : 1,
-					'href'     => $this->url->link('product/category', 'path=' . $category['category_id'])
+						'category_1_id' => $category_1['category_id'],
+						'column'   => $category_1['column'] ? $category_1['column'] : 1,
+						'name'     => $category_1['name'],
+						'children' => $level_2_data,
+						'href'     => $this->url->link('product/category', 'path=' . $category_1['category_id'])
 				);
 			}
 		}
+		// New theme end
 
 		$data['language'] = $this->load->controller('common/language');
 		$data['currency'] = $this->load->controller('common/currency');

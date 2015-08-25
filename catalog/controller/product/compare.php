@@ -191,6 +191,9 @@ class ControllerProductCompare extends Controller {
 			$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'product_id=' . $this->request->post['product_id']), $product_info['name'], $this->url->link('product/compare'));
 
 			$json['total'] = sprintf($this->language->get('text_compare'), (isset($this->session->data['compare']) ? count($this->session->data['compare']) : 0));
+			// New theme start
+			$json['compare_total'] = sprintf($this->language->get('text_header_compare'), (isset($this->session->data['compare']) ? count($this->session->data['compare']) : 0));
+			// New theme end
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

@@ -246,6 +246,12 @@ class ControllerMarketingContact extends Controller {
 							$mail->setFrom($this->config->get('config_email'));
 							$mail->setSender(html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'));
 							$mail->setSubject(html_entity_decode($this->request->post['subject'], ENT_QUOTES, 'UTF-8'));
+							// New theme start
+							if ($this->config->get('newsletter_global_status') && $this->request->post['to'] == 'newsletter') {
+								$message1 = $message;
+								$message = str_replace('{unsubscribe_link}', HTTP_CATALOG . 'index.php?route=module/newsletter/unsubscribe&id=' . md5('newsletter' . $email), $message1);
+							}
+							// New theme end
 							$mail->setHtml($message);
 							$mail->send();
 						}

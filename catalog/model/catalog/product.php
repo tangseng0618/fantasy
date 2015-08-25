@@ -498,6 +498,28 @@ class ModelCatalogProduct extends Model {
 	public function getProfile($product_id, $recurring_id) {
 		return $this->db->query("SELECT * FROM `" . DB_PREFIX . "recurring` `p` JOIN `" . DB_PREFIX . "product_recurring` `pp` ON `pp`.`recurring_id` = `p`.`recurring_id` AND `pp`.`product_id` = " . (int)$product_id . " WHERE `pp`.`recurring_id` = " . (int)$recurring_id . " AND `status` = 1 AND `pp`.`customer_group_id` = " . (int)$this->config->get('config_customer_group_id'))->row;
 	}
+	
+	// New theme start
+	public function getSpecialPriceEnd($product_id) {
+		$query = $this->db->query("SELECT date_end FROM " . DB_PREFIX . "product_special WHERE product_id = '" . (int)$product_id . "' AND customer_group_id = '" . $this->config->get('config_customer_group_id') . "' AND ((date_end = '0000-00-00 00:00:00' OR date_end > NOW())) ORDER BY priority ASC, price ASC LIMIT 1");
+	
+		if ($query->num_rows) {
+			return array(
+					'date_end'   => $query->row['date_end'],
+			);
+		} else {
+			return false;
+		}
+	}
+	public function getItemsSold($product_id) {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order_product` op LEFT JOIN `" . DB_PREFIX . "order` o ON (op.order_id = o.order_id) WHERE o.order_status_id > '0' AND op.product_id = '" . (int)$product_id . "'");
+		if ($query->row) {
+			return $query->row['total'];
+		} else {
+			return false;
+		}
+	}
+	// New theme end
 
 	public function getTotalProductSpecials() {
 		$query = $this->db->query("SELECT COUNT(DISTINCT ps.product_id) AS total FROM " . DB_PREFIX . "product_special ps LEFT JOIN " . DB_PREFIX . "product p ON (ps.product_id = p.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "' AND ps.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND ((ps.date_start = '0000-00-00' OR ps.date_start < NOW()) AND (ps.date_end = '0000-00-00' OR ps.date_end > NOW()))");
@@ -508,4 +530,20 @@ class ModelCatalogProduct extends Model {
 			return 0;
 		}
 	}
+	
+	// New theme start
+	public function getProductTabs($product_id) {
+		$product_tab_data = array();
+		$product_tab_query = $this->db->query("SELECT t.tab_id, td.name, pt.text, t.position, t.show_empty FROM " . DB_PREFIX . "product_tab pt LEFT JOIN " . DB_PREFIX . "tab t ON (pt.tab_id = t.tab_id) LEFT JOIN " . DB_PREFIX . "tab_description td ON (t.tab_id = td.tab_id) WHERE pt.product_id = '" . (int)$product_id . "' AND td.language_id = '" . (int)$this->config->get('config_language_id') . "' AND pt.language_id = '" . (int)$this->config->get('config_language_id') . "' AND t.status = '1' AND ( t.show_empty = '1' OR NOT pt.text REGEXP '^[[:space:]]*$' ) ORDER BY t.position, t.sort_order, td.name");
+		foreach ($product_tab_query->rows as $product_tab) {
+			$product_tab_data[] = array(
+					'tab_id' 				=> $product_tab['tab_id'],
+					'name'      		=> $product_tab['name'],
+					'text'      		=> $product_tab['text'],
+					'position' 			=> $product_tab['position']
+			);
+		}
+		return $product_tab_data;
+	}
+	// New theme end
 }

@@ -149,7 +149,15 @@ class ModelSaleCustomer extends Model {
 
 		$query = $this->db->query($sql);
 
-		return $query->rows;
+// 		return $query->rows;
+		// New theme start
+		if ($this->config->get('newsletter_global_status') && !empty($data['filter_newsletter']) && isset($data['start']) && $data['start'] == 0) {
+			$query1 = $this->db->query("SELECT * FROM " . DB_PREFIX . "newsletter");
+			return array_merge($query1->rows, $query->rows);
+		} else {
+			return $query->rows;
+		}
+		// New theme end
 	}
 
 	public function approve($customer_id) {

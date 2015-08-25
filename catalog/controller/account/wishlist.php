@@ -168,6 +168,9 @@ class ControllerAccountWishList extends Controller {
 			}
 
 			$json['total'] = sprintf($this->language->get('text_wishlist'), (isset($this->session->data['wishlist']) ? count($this->session->data['wishlist']) : 0));
+			// New theme start
+			$json['wishlist_total'] = sprintf($this->language->get('text_header_wishlist'), (isset($this->session->data['wishlist']) ? count($this->session->data['wishlist']) : 0));
+			// New theme end
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

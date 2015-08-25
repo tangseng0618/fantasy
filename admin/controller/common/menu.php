@@ -2,6 +2,26 @@
 class ControllerCommonMenu extends Controller {
 	public function index() {
 		$this->load->language('common/menu');
+		
+		// New theme start
+		$this->load->language('catalog/question');
+		$data['question_url'] = $this->url->link('catalog/question', 'token=' . $this->session->data['token'], 'SSL');
+		$data['question_menu'] = $this->language->get('question_menu');
+		
+		$data['newsletter'] = $this->url->link('extension/newsletter', 'token=' . $this->session->data['token'], 'SSL');
+		$data['text_newsletter'] = $this->language->get('text_newsletter');
+		
+		$this->load->language('blog/blog');
+		$data['text_blog'] = $this->language->get('text_blog');
+		$data['text_blog_setting'] = $this->language->get('text_blog_setting');
+		$data['text_blog_category'] = $this->language->get('text_blog_category');
+		$data['text_blog_post'] = $this->language->get('text_blog_post');
+		$data['text_blog_comment'] = $this->language->get('text_blog_comment');
+		$data['blog_setting'] = $this->url->link('blog/blog_setting', 'token=' . $this->session->data['token'], 'SSL');
+		$data['blog_category'] = $this->url->link('blog/blog_category', 'token=' . $this->session->data['token'], 'SSL');
+		$data['blog_post'] = $this->url->link('blog/blog', 'token=' . $this->session->data['token'], 'SSL');
+		$data['blog_comment'] = $this->url->link('blog/blog_comment', 'token=' . $this->session->data['token'], 'SSL');
+		// New theme end
 
 		$data['text_affiliate'] = $this->language->get('text_affiliate');
 		$data['text_api'] = $this->language->get('text_api');
@@ -35,6 +55,12 @@ class ControllerCommonMenu extends Controller {
 		$data['text_dashboard'] = $this->language->get('text_dashboard');
 		$data['text_help'] = $this->language->get('text_help');
 		$data['text_information'] = $this->language->get('text_information');
+		// New theme start
+		$this->load->language('catalog/tab');
+		$data['text_product_tab'] = $this->language->get('text_product_tab');
+		$data['product_tab'] = $this->url->link('catalog/tab', 'token=' . $this->session->data['token'], 'SSL');
+		// New theme end
+		
 		$data['text_installer'] = $this->language->get('text_installer');
 		$data['text_language'] = $this->language->get('text_language');
 		$data['text_layout'] = $this->language->get('text_layout');

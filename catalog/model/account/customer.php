@@ -1,6 +1,12 @@
 <?php
 class ModelAccountCustomer extends Model {
 	public function addCustomer($data) {
+		// New theme start
+		if ($this->config->get('newsletter_global_status') && !empty($data['email'])) {
+			$this->db->query("DELETE FROM " . DB_PREFIX . "newsletter WHERE email = '" . $this->db->escape($data['email']) . "'");
+		}
+		// New theme end
+		
 		$this->event->trigger('pre.customer.add', $data);
 
 		if (isset($data['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($data['customer_group_id'], $this->config->get('config_customer_group_display'))) {

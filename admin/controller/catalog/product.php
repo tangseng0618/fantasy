@@ -623,6 +623,13 @@ class ControllerCatalogProduct extends Controller {
 		$data['tab_general'] = $this->language->get('tab_general');
 		$data['tab_data'] = $this->language->get('tab_data');
 		$data['tab_attribute'] = $this->language->get('tab_attribute');
+		// New theme start
+		$this->load->language('catalog/tab');
+		$data['entry_tab_name'] = $this->language->get('entry_tab_name');
+		$data['entry_tab_text'] = $this->language->get('entry_tab_text');
+		$data['button_add_tab'] = $this->language->get('button_add_tab');
+		$data['tab_product_tab'] = $this->language->get('tab_product_tab');
+		// New theme end
 		$data['tab_option'] = $this->language->get('tab_option');
 		$data['tab_recurring'] = $this->language->get('tab_recurring');
 		$data['tab_discount'] = $this->language->get('tab_discount');
@@ -1097,6 +1104,16 @@ class ControllerCatalogProduct extends Controller {
 				);
 			}
 		}
+		
+		// New theme start
+		if (isset($this->request->post['product_tab'])) {
+			$data['product_tabs'] = $this->request->post['product_tab'];
+		} elseif (isset($this->request->get['product_id'])) {
+			$data['product_tabs'] = $this->model_catalog_product->getProductTabs($this->request->get['product_id']);
+		} else {
+			$data['product_tabs'] = array();
+		}
+		// New theme end
 
 		// Options
 		$this->load->model('catalog/option');

@@ -17,6 +17,10 @@
       <li><a href="<?php echo $download; ?>"><?php echo $text_download; ?></a></li>
       <li><a href="<?php echo $review; ?>"><?php echo $text_review; ?></a></li>
       <li><a href="<?php echo $information; ?>"><?php echo $text_information; ?></a></li>
+      <!-- New theme start -->
+      <li><a href="<?php echo $product_tab; ?>"><?php echo $text_product_tab; ?></a></li>
+      <li><a href="<?php echo $question_url; ?>"><?php echo $question_menu; ?></a></li>
+      <!-- New theme end -->
     </ul>
   </li>
   <li id="extension"><a class="parent"><i class="fa fa-puzzle-piece fa-fw"></i> <span><?php echo $text_extension; ?></span></a>
@@ -28,6 +32,9 @@
       <li><a href="<?php echo $payment; ?>"><?php echo $text_payment; ?></a></li>
       <li><a href="<?php echo $total; ?>"><?php echo $text_total; ?></a></li>
       <li><a href="<?php echo $feed; ?>"><?php echo $text_feed; ?></a></li>
+      <!-- New theme start -->
+      <li><a href="<?php echo $newsletter; ?>"><?php echo $text_newsletter; ?></a></li>
+      <!-- New theme end -->
       <li><a href="<?php echo $fraud; ?>"><?php echo $text_fraud; ?></a></li>
       <?php if ($openbay_show_menu == 1) { ?>
       <li><a class="parent"><?php echo $text_openbay_extension; ?></a>
@@ -156,6 +163,16 @@
       </li>
     </ul>
   </li>
+  <!-- New theme start -->
+  <li><a class="parent"><i class="fa fa-newspaper-o fa-fw"></i> <span><?php echo $text_blog; ?></span></a>
+	<ul>
+	<li><a href="<?php echo $blog_setting; ?>"><?php echo $text_blog_setting; ?></a></li>
+	<li><a href="<?php echo $blog_category; ?>"><?php echo $text_blog_category; ?></a></li>
+	<li><a href="<?php echo $blog_post; ?>"><?php echo $text_blog_post; ?></a></li>
+	<li><a href="<?php echo $blog_comment; ?>"><?php echo $text_blog_comment; ?></a></li>
+	</ul>
+  </li>
+  <!-- New theme end -->
   <li id="tools"><a class="parent"><i class="fa fa-wrench fa-fw"></i> <span><?php echo $text_tools; ?></span></a>
     <ul>
       <li><a href="<?php echo $upload; ?>"><?php echo $text_upload; ?></a></li>

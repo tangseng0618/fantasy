@@ -31,6 +31,20 @@ class ModelCatalogProduct extends Model {
 			}
 		}
 
+		// New theme start
+		if (isset($data['product_tab'])) {
+			foreach ($data['product_tab'] as $product_tab) {
+				if ($product_tab['tab_id']) {
+					$this->db->query("DELETE FROM " . DB_PREFIX . "product_tab WHERE product_id = '" . (int)$product_id . "' AND tab_id = '" . (int)$product_tab['tab_id'] . "'");
+		
+					foreach ($product_tab['product_tab_description'] as $language_id => $product_tab_description) {
+						$this->db->query("INSERT INTO " . DB_PREFIX . "product_tab SET product_id = '" . (int)$product_id . "', tab_id = '" . (int)$product_tab['tab_id'] . "', language_id = '" . (int)$language_id . "', text = '" .  $this->db->escape($product_tab_description['text']) . "'");
+					}
+				}
+			}
+		}
+		// New theme end
+		
 		if (isset($data['product_option'])) {
 			foreach ($data['product_option'] as $product_option) {
 				if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox' || $product_option['type'] == 'image') {
@@ -159,6 +173,21 @@ class ModelCatalogProduct extends Model {
 				}
 			}
 		}
+		
+		// New theme start
+		$this->db->query("DELETE FROM " . DB_PREFIX . "product_tab WHERE product_id = '" . (int)$product_id . "'");
+		if (!empty($data['product_tab'])) {
+			foreach ($data['product_tab'] as $product_tab) {
+				if ($product_tab['tab_id']) {
+					$this->db->query("DELETE FROM " . DB_PREFIX . "product_tab WHERE product_id = '" . (int)$product_id . "' AND tab_id = '" . (int)$product_tab['tab_id'] . "'");
+		
+					foreach ($product_tab['product_tab_description'] as $language_id => $product_tab_description) {
+						$this->db->query("INSERT INTO " . DB_PREFIX . "product_tab SET product_id = '" . (int)$product_id . "', tab_id = '" . (int)$product_tab['tab_id'] . "', language_id = '" . (int)$language_id . "', text = '" .  $this->db->escape($product_tab_description['text']) . "'");
+					}
+				}
+			}
+		}
+		// New theme end
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_option WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_option_value WHERE product_id = '" . (int)$product_id . "'");
@@ -291,6 +320,9 @@ class ModelCatalogProduct extends Model {
 			$data['status'] = '0';
 
 			$data['product_attribute'] = $this->getProductAttributes($product_id);
+			// New theme start
+			$data['product_tab'] = $this->getProductTabs($product_id);
+			// New theme end
 			$data['product_description'] = $this->getProductDescriptions($product_id);
 			$data['product_discount'] = $this->getProductDiscounts($product_id);
 			$data['product_filter'] = $this->getProductFilters($product_id);
@@ -311,8 +343,15 @@ class ModelCatalogProduct extends Model {
 
 	public function deleteProduct($product_id) {
 		$this->event->trigger('pre.admin.product.delete', $product_id);
+		
+		// New theme start
+		$this->db->query("DELETE FROM " . DB_PREFIX . "product_tab WHERE product_id = '" . (int)$product_id . "'");
+		// New theme end
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product WHERE product_id = '" . (int)$product_id . "'");
+		// New theme start
+		$this->db->query("DELETE FROM " . DB_PREFIX . "question WHERE product_id = '" . (int)$product_id . "'");
+		// New theme end
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_attribute WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_description WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_discount WHERE product_id = '" . (int)$product_id . "'");
@@ -672,6 +711,13 @@ class ModelCatalogProduct extends Model {
 
 		return $query->row['total'];
 	}
+	
+	// New theme start
+	public function getTotalProductsByTabId($tab_id) {
+		$query = $this->db->query("SELECT COUNT(DISTINCT product_id) AS total FROM " . DB_PREFIX . "product_tab WHERE tab_id = '" . (int)$tab_id . "'");
+		return $query->row['total'];
+	}
+	// New theme end
 
 	public function getTotalProductsByOptionId($option_id) {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "product_option WHERE option_id = '" . (int)$option_id . "'");
@@ -684,6 +730,26 @@ class ModelCatalogProduct extends Model {
 
 		return $query->row['total'];
 	}
+	
+	// New theme start
+	public function getProductTabs($product_id) {
+		$product_tab_data = array();
+		$product_tab_query = $this->db->query("SELECT t.tab_id, td.name FROM " . DB_PREFIX . "product_tab pt LEFT JOIN " . DB_PREFIX . "tab t ON (pt.tab_id = t.tab_id) LEFT JOIN " . DB_PREFIX . "tab_description td ON (t.tab_id = td.tab_id) WHERE pt.product_id = '" . (int)$product_id . "' AND td.language_id = '" . (int)$this->config->get('config_language_id') . "' GROUP BY pt.tab_id");
+		foreach ($product_tab_query->rows as $product_tab) {
+			$product_tab_description_data = array();
+			$product_tab_description_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_tab WHERE product_id = '" . (int)$product_id . "' AND tab_id = '" . (int)$product_tab['tab_id'] . "'");
+			foreach ($product_tab_description_query->rows as $product_tab_description) {
+				$product_tab_description_data[$product_tab_description['language_id']] = array('text' => $product_tab_description['text']);
+			}
+			$product_tab_data[] = array(
+					'tab_id' 									=> $product_tab['tab_id'],
+					'name'         						=> $product_tab['name'],
+					'product_tab_description' => $product_tab_description_data
+			);
+		}
+		return $product_tab_data;
+	}
+	// New theme end
 
 	public function getTotalProductsByLayoutId($layout_id) {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "product_to_layout WHERE layout_id = '" . (int)$layout_id . "'");

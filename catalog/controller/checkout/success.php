@@ -31,6 +31,10 @@ class ControllerCheckoutSuccess extends Controller {
 			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
 			unset($this->session->data['guest']);
+			// New theme start
+			unset($this->session->data['delivery_date']);
+			unset($this->session->data['survey']);
+			// New theme end
 			unset($this->session->data['comment']);
 			unset($this->session->data['order_id']);
 			unset($this->session->data['coupon']);

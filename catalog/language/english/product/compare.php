@@ -20,3 +20,6 @@ $_['text_compare']      = 'Product Compare (%s)';
 $_['text_success']      = 'Success: You have added <a href="%s">%s</a> to your <a href="%s">product comparison</a>!';
 $_['text_remove']       = 'Success: You have modified your product comparison!';
 $_['text_empty']        = 'You have not chosen any products to compare.';
+
+// New theme start
+$_['text_header_compare'] = '&lt;i class=&quot;fa fa-arrow-right&quot;&gt;&lt;/i&gt;&lt;i class=&quot;fa fa-arrow-left&quot;&gt;&lt;/i&gt;&lt;span class=&quot;count&quot;&gt;%s&lt;/span&gt;';

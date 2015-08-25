@@ -19,6 +19,25 @@ class ControllerCommonFooter extends Controller {
 		$data['text_newsletter'] = $this->language->get('text_newsletter');
 
 		$this->load->model('catalog/information');
+		
+		// New theme start
+		$data['live_search'] = $this->load->controller('module/d_ajax_search');
+		$data['footer_modules'] = $this->load->controller('common/footer_modules');
+		$cosyone_footer_block_title = $this->config->get('cosyone_footer_custom_block_title');
+		if(empty($cosyone_footer_block_title[$this->language->get('code')])) {
+			$data['cosyone_footer_custom_block_title'] = false;
+		} else if (isset($cosyone_footer_block_title[$this->language->get('code')])) {
+			$data['cosyone_footer_custom_block_title'] = html_entity_decode($cosyone_footer_block_title[$this->language->get('code')], ENT_QUOTES, 'UTF-8');
+		}
+		$data['cosyone_footer_payment_icon'] = $this->config->get('cosyone_footer_payment_icon');
+		$data['cosyone_use_retina'] = $this->config->get('cosyone_use_retina');
+		$cosyone_footer_block = $this->config->get('cosyone_footer_custom_block');
+		if(empty($cosyone_footer_block[$this->language->get('code')])) {
+			$data['cosyone_footer_custom_block'] = false;
+		} else if (isset($cosyone_footer_block[$this->language->get('code')])) {
+			$data['cosyone_footer_custom_block'] = html_entity_decode($cosyone_footer_block[$this->language->get('code')], ENT_QUOTES, 'UTF-8');
+		}
+		// New theme end
 
 		$data['informations'] = array();
 

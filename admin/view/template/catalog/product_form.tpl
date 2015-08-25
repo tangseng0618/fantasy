@@ -37,6 +37,9 @@
             <li><a href="#tab-image" data-toggle="tab"><?php echo $tab_image; ?></a></li>
             <li><a href="#tab-reward" data-toggle="tab"><?php echo $tab_reward; ?></a></li>
             <li><a href="#tab-design" data-toggle="tab"><?php echo $tab_design; ?></a></li>
+            <!-- New theme start -->
+            <li><a href="#tab-product_tab" data-toggle="tab"><?php echo $tab_product_tab; ?></a></li>
+            <!-- New theme end -->
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
@@ -841,6 +844,46 @@
                 </table>
               </div>
             </div>
+            <!-- New theme start -->
+            <div class="tab-pane" id="tab-product_tab">
+              <div class="table-responsive">
+                
+				<table id="tab" class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-left"><?php echo $entry_tab_name; ?></td>
+                      <td class="text-left"><?php echo $entry_tab_text; ?></td>
+                      <td></td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php $product_tab_row = 0; ?>
+                    <?php foreach ($product_tabs as $product_tab) { ?>
+                    <tr id="tab-product_tab-<?php echo $product_tab_row; ?>">
+                      <td class="text-left" style="width: 20%;"><input type="text" name="product_tab[<?php echo $product_tab_row; ?>][name]" value="<?php echo $product_tab['name']; ?>" placeholder="<?php echo $entry_tab_name; ?>" class="form-control" />
+                        <input type="hidden" name="product_tab[<?php echo $product_tab_row; ?>][tab_id]" value="<?php echo $product_tab['tab_id']; ?>" /></td>                      <td class="text-left">
+					  <?php foreach ($languages as $language) { ?>
+                        <div class="input-group" style="background:#ffffff"><span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
+						  <textarea name="product_tab[<?php echo $product_tab_row; ?>][product_tab_description][<?php echo $language['language_id']; ?>][text]" class="form-control tab_block" rows="5"><?php echo isset($product_tab['product_tab_description'][$language['language_id']]) ? $product_tab['product_tab_description'][$language['language_id']]['text'] : ''; ?></textarea>
+                        </div>
+                        <?php } ?>
+						</td>
+                      <td class="text-left"><button type="button" onclick="$('#tab-product_tab-<?php echo $product_tab_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                    </tr>
+					
+                    <?php $product_tab_row++; ?>
+                    <?php } ?>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td colspan="2"></td>
+                      <td class="text-left"><button type="button" onclick="addtab();" data-toggle="tooltip" title="<?php echo $button_add_tab; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <!-- New theme end -->
             <div class="tab-pane" id="tab-reward">
               <div class="form-group">
                 <label class="col-lg-2 control-label" for="input-points"><span data-toggle="tooltip" title="<?php echo $help_points; ?>"><?php echo $entry_points; ?></span></label>
@@ -1401,4 +1444,55 @@ $('.datetime').datetimepicker({
 $('#language a:first').tab('show');
 $('#option a:first').tab('show');
 //--></script></div>
+<!-- New theme start -->
+<script type="text/javascript"><!--
+var product_tab_row = <?php echo $product_tab_row; ?>;
+function addtab() {
+    html  = '<tr id="tab-product_tab-' + product_tab_row + '">';
+	html += '  <td class="text-left" style="width: 20%;"><input type="text" name="product_tab[' + product_tab_row + '][name]" value="" placeholder="<?php echo $entry_tab_name; ?>" class="form-control" /><input type="hidden" name="product_tab[' + product_tab_row + '][tab_id]" value="" /></td>';
+	html += '  <td class="text-left">';
+	<?php foreach ($languages as $language) { ?>
+	html += '<div class="input-group" style="background:#ffffff"><span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span><textarea name="product_tab[' + product_tab_row + '][product_tab_description][<?php echo $language['language_id']; ?>][text]" rows="5" class="form-control tab_block"></textarea></div>';
+    <?php } ?>
+	html += '  </td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#tab-product_tab-' + product_tab_row + '\').remove();" data-toggle="tooltip" title="re" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+    html += '</tr>';
+	$('#tab-product_tab tbody').append(html)
+	$('.tab_block').focus(function( ){
+$(this).summernote({ height: 200 });
+});
+	product_tabautocomplete(product_tab_row);
+	product_tab_row++;
+}
+$('.tab_block').focus(function( ){
+$(this).summernote({ height: 200 });
+});
+function product_tabautocomplete(product_tab_row) {
+	$('input[name=\'product_tab[' + product_tab_row + '][name]\']').autocomplete({
+		'source': function(request, response) {
+			$.ajax({
+				url: 'index.php?route=catalog/tab/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+				dataType: 'json',			
+				success: function(json) {
+					response($.map(json, function(item) {
+						return {
+							label: item.name,
+							value: item.tab_id
+						}
+					}));
+				}
+			});
+		},
+		'select': function(item) {
+			$('input[name=\'product_tab[' + product_tab_row + '][name]\']').val(item['label']);
+			$('input[name=\'product_tab[' + product_tab_row + '][tab_id]\']').val(item['value']);
+
+		}
+	});
+}
+$('#product_tab tbody tr').each(function(index, element) {
+	product_tabautocomplete(index);
+});
+//--></script>
+<!-- New theme end -->
 <?php echo $footer; ?> 

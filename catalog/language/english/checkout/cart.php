@@ -40,3 +40,6 @@ $_['error_minimum']            = 'Minimum order amount for %s is %s!';
 $_['error_required']           = '%s required!';
 $_['error_product']            = 'Warning: There are no products in your cart!';
 $_['error_recurring_required'] = 'Please select a payment recurring!';
+
+// New theme start
+$_['text_items'] = '&lt;i class=&quot;fa fa-shopping-cart&quot;&gt;&lt;/i&gt;&lt;span class=&quot;count&quot;&gt;%s&lt;/span&gt; &lt;span class=&quot;total contrast_font mobile_hide&quot;&gt;%s&lt;/span&gt;';

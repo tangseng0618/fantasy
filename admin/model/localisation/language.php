@@ -139,6 +139,14 @@ class ModelLocalisationLanguage extends Model {
 		foreach ($query->rows as $product_attribute) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "product_attribute SET product_id = '" . (int)$product_attribute['product_id'] . "', attribute_id = '" . (int)$product_attribute['attribute_id'] . "', language_id = '" . (int)$language_id . "', text = '" . $this->db->escape($product_attribute['text']) . "'");
 		}
+		
+		// New theme start
+		// Product Tabs
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_tab WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
+		foreach ($query->rows as $product_tab) {
+			$this->db->query("INSERT INTO " . DB_PREFIX . "product_tab SET product_id = '" . (int)$product_tab['product_id'] . "', tab_id = '" . (int)$product_tab['tab_id'] . "', language_id = '" . (int)$language_id . "', text = '" . $this->db->escape($product_tab['text']) . "'");
+		}
+		// New theme end
 
 		// Return Action
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "return_action WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
@@ -169,6 +177,14 @@ class ModelLocalisationLanguage extends Model {
 		}
 
 		$this->cache->delete('stock_status');
+		
+		// New theme start
+		// Tabs
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "tab_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
+		foreach ($query->rows as $tab) {
+			$this->db->query("INSERT INTO " . DB_PREFIX . "tab_description SET tab_id = '" . (int)$tab['tab_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($tab['name']) . "'");
+		}
+		// New theme end
 
 		// Voucher Theme
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "voucher_theme_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
@@ -238,6 +254,9 @@ class ModelLocalisationLanguage extends Model {
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_attribute WHERE language_id = '" . (int)$language_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_description WHERE language_id = '" . (int)$language_id . "'");
+		// New theme start
+		$this->db->query("DELETE FROM " . DB_PREFIX . "product_tab WHERE language_id = '" . (int)$language_id . "'");
+		// New theme end
 
 		$this->cache->delete('product');
 
@@ -256,6 +275,10 @@ class ModelLocalisationLanguage extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "stock_status WHERE language_id = '" . (int)$language_id . "'");
 
 		$this->cache->delete('stock_status');
+		
+		// New theme start
+		$this->db->query("DELETE FROM " . DB_PREFIX . "tab_description WHERE language_id = '" . (int)$language_id . "'");
+		// New theme end
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "voucher_theme_description WHERE language_id = '" . (int)$language_id . "'");
 

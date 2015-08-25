@@ -38,6 +38,27 @@ class ControllerProductCategory extends Controller {
 		} else {
 			$limit = $this->config->get('config_product_limit');
 		}
+		
+		// New theme start
+		$this->load->language('common/cosyone');
+		$data['text_category_expire'] = $this->language->get('text_category_expire');
+		$data['cosyone_category_thumb'] = $this->config->get('cosyone_category_thumb');
+		$data['cosyone_grid_category'] = $this->config->get('cosyone_grid_category');
+		$data['cosyone_category_refine'] = $this->config->get('cosyone_category_refine');
+		$data['cosyone_category_per_row'] = $this->config->get('cosyone_category_per_row');
+		$data['cosyone_rollover_effect'] = $this->config->get('cosyone_rollover_effect');
+		$data['cosyone_percentage_sale_badge'] = $this->config->get('cosyone_percentage_sale_badge');
+		$cosyone_quicklook = $this->config->get('cosyone_text_ql');
+		if(empty($cosyone_quicklook[$this->language->get('code')])) {
+			$data['cosyone_text_ql'] = false;
+		} else if (isset($cosyone_quicklook[$this->language->get('code')])) {
+			$data['cosyone_text_ql'] = html_entity_decode($cosyone_quicklook[$this->language->get('code')], ENT_QUOTES, 'UTF-8');
+		}
+		$data['cosyone_brand'] = $this->config->get('cosyone_brand');
+		$data['cosyone_product_countdown'] = $this->config->get('cosyone_product_countdown');
+		$data['cosyone_product_hurry'] = $this->config->get('cosyone_product_hurry');
+		$data['cosyone_default_view'] = $this->config->get('cosyone_default_view');
+		// New theme end
 
 		$data['breadcrumbs'] = array();
 
@@ -158,8 +179,15 @@ class ControllerProductCategory extends Controller {
 					'filter_category_id'  => $result['category_id'],
 					'filter_sub_category' => true
 				);
+				
+				// New theme start
+				$image = $this->model_tool_image->resize($result['image'], $this->config->get('cosyone_refine_image_w'), $this->config->get('cosyone_refine_image_h'));
+				// New theme end
 
 				$data['categories'][] = array(
+					// New theme start
+					'thumb' => $image,
+					// New theme end
 					'name'  => $result['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : ''),
 					'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '_' . $result['category_id'] . $url)
 				);
@@ -210,6 +238,26 @@ class ControllerProductCategory extends Controller {
 				} else {
 					$rating = false;
 				}
+				
+				// New theme start
+				if ((float)$result['special']) {
+					$sales_percantage = ((($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')))-($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax'))))/(($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')))/100));
+				} else {
+					$sales_percantage = false;
+				}
+				if ((float)$result['special']) {
+					$special_info = $this->model_catalog_product->getSpecialPriceEnd($result['product_id']);
+					$special_date_end = strtotime($special_info['date_end']) - time();
+				} else {
+					$special_date_end = false;
+				}
+				$images = $this->model_catalog_product->getProductImages($result['product_id']);
+				if(isset($images[0]['image']) && !empty($images[0]['image'])){
+					$images =$images[0]['image'];
+				} else {
+					$images = false;
+				}
+				// New theme end
 
 				$data['products'][] = array(
 					'product_id'  => $result['product_id'],
@@ -218,9 +266,19 @@ class ControllerProductCategory extends Controller {
 					'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..',
 					'price'       => $price,
 					'special'     => $special,
+					// New theme start
+					'sales_percantage' => number_format($sales_percantage, 0, ',', '.'),
+					'special_date_end' => $special_date_end,
+					'stock_quantity' => sprintf($this->language->get('text_category_stock_quantity'), (int)$result['quantity']),
+					'brand_name'		=> $result['manufacturer'],
+					'thumb_hover'  => $this->model_tool_image->resize($images, $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height')),
+					// New theme end
 					'tax'         => $tax,
 					'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
 					'rating'      => $result['rating'],
+					// New theme start
+					'quickview'   => $this->url->link('product/quickview', 'product_id=' . $result['product_id'], '', 'SSL'),
+					// New theme end
 					'href'        => $this->url->link('product/product', 'path=' . $this->request->get['path'] . '&product_id=' . $result['product_id'] . $url)
 				);
 			}

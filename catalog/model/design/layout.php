@@ -1,5 +1,18 @@
 <?php
 class ModelDesignLayout extends Model {
+	// New theme start
+	public function getLayoutForAllPages() {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "layout
+      WHERE name like '%Footer%'
+      LIMIT 1");
+		if ($query->num_rows) {
+			return $query->row['layout_id'];
+		} else {
+			return 0;
+		}
+	}
+	// New theme end
+	
 	public function getLayout($route) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "layout_route WHERE '" . $this->db->escape($route) . "' LIKE route AND store_id = '" . (int)$this->config->get('config_store_id') . "' ORDER BY route DESC LIMIT 1");
 

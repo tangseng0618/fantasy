@@ -8,6 +8,14 @@ class ControllerCommonHome extends Controller {
 		if (isset($this->request->get['route'])) {
 			$this->document->addLink(HTTP_SERVER, 'canonical');
 		}
+		
+		// New theme start
+		$data['home_top_top'] = $this->load->controller('common/home_top_top');
+		$data['home_top_left'] = $this->load->controller('common/home_top_left');
+		$data['home_top_center'] = $this->load->controller('common/home_top_center');
+		$data['home_top_right'] = $this->load->controller('common/home_top_right');
+		$data['content_bottom_half'] = $this->load->controller('common/content_bottom_half');
+		// New theme end
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

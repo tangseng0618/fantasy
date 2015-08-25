@@ -54,6 +54,10 @@ class ControllerInformationContact extends Controller {
 		$data['entry_email'] = $this->language->get('entry_email');
 		$data['entry_enquiry'] = $this->language->get('entry_enquiry');
 
+		// New theme start
+		$data['cosyone_google_map'] = $this->config->get('cosyone_google_map');
+		// New theme end
+		
 		$data['button_map'] = $this->language->get('button_map');
 
 		if (isset($this->error['name'])) {

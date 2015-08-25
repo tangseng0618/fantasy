@@ -396,7 +396,10 @@ class ControllerDesignLayout extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('design/layout_form.tpl', $data));
+// 		$this->response->setOutput($this->load->view('design/layout_form.tpl', $data));
+		// New theme start
+		$this->response->setOutput($this->load->view('design/layout_form_cosyone.tpl', $data));
+		// New theme end
 	}
 
 	protected function validateForm() {
