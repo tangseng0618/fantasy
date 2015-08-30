@@ -3698,7 +3698,7 @@ a.button.remove:hover, .button.remove:hover {
 	border-top:2px solid #222222;
 }
 #powered {
-	float:left;
+	text-align:center;
 	display:block;
 	font-size:12px;
 }

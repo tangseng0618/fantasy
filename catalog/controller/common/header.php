@@ -1,7 +1,20 @@
 <?php
 class ControllerCommonHeader extends Controller {
 	public function index() {
-		$data['title'] = $this->document->getTitle();
+// 		$data['title'] = $this->document->getTitle();
+		$htmlTitle = $this->document->getTitle();
+		$storeName = $this->config->get('config_name');
+		if (!isset($this->request->get['route']) || $this->request->get['route'] == 'common/home') {
+			// 首页标题
+			$data['title'] = $htmlTitle;
+		} else {
+			// 其他页面标题
+			if (empty($htmlTitle)) {
+				$data['title'] = $storeName;
+			} else {
+				$data['title'] = $htmlTitle . ' - ' . $storeName;
+			}
+		}
 		
 		// New theme start
 		if ($this->config->get('cosyone_use_custom_font')) {
