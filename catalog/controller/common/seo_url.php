@@ -52,11 +52,16 @@ class ControllerCommonSeoUrl extends Controller {
 							$this->request->get['blogpath'] .= '_' . $url[1];
 						}
 					}
-
+				
 // 					if ($query->row['query'] && $url[0] != 'information_id' && $url[0] != 'manufacturer_id' && $url[0] != 'category_id' && $url[0] != 'product_id') {
 					if ($query->row['query'] && $url[0] != 'information_id' && $url[0] != 'manufacturer_id' && $url[0] != 'category_id' && $url[0] != 'blog_category_id' && $url[0] != 'blog_id' && $url[0] != 'product_id') {
 					// New theme end
 						$this->request->get['route'] = $query->row['query'];
+					}
+					
+					// Payment Alipay Callback
+					if ($url[0] == 'payment' && $url[1] == 'alipay_callback') {
+						$this->request->get['route'] = 'payment/alipay/callback';
 					}
 				} else {
 					$this->request->get['route'] = 'error/not_found';
