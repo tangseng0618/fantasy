@@ -14,6 +14,8 @@ $_['text_comment']   = '附言';
 $_['text_success']   = '<p>你的信息已成功发送到店主！</p>';
 $_['text_email']     = '邮箱';
 $_['text_message']   = '<p>您的查询已发送！</p>';
+// 联系信息
+$_['text_contact_info']   = '<p>我们的联系邮箱是：<a href="mailto:%s">%s</a></p>';
 
 // Entry
 $_['entry_name']     = '您的姓名';

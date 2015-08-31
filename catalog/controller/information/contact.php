@@ -6,6 +6,9 @@ class ControllerInformationContact extends Controller {
 		$this->load->language('information/contact');
 
 		$this->document->setTitle($this->language->get('heading_title'));
+		
+		// 联系信息
+		$data['text_contact_info'] = sprintf($this->language->get('text_contact_info'), $this->config->get('config_email'), $this->config->get('config_email'));
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$mail = new Mail();
