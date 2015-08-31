@@ -23,7 +23,9 @@ class Request {
 				$data[$this->clean($key)] = $this->clean($value);
 			}
 		} else {
-			$data = htmlspecialchars($data, ENT_COMPAT, 'UTF-8');
+// 			$data = htmlspecialchars($data, ENT_COMPAT, 'UTF-8');
+			// 前后空格修剪处理
+			$data = trim(htmlspecialchars($data, ENT_COMPAT, 'UTF-8'));
 		}
 
 		return $data;
