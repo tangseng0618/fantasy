@@ -47,10 +47,16 @@ class ModelCatalogCategory extends Model {
 			}
 		}
 
-		if (isset($data['keyword'])) {
+		// 类别URL重写
+// 		if (isset($data['keyword'])) {
+// 			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'category_id=" . (int)$category_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
+// 		}
+		if (isset($data['keyword']) && !empty($data['keyword']) && !ctype_space($data['keyword'])) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'category_id=" . (int)$category_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
+		} else {
+			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'category_id=" . (int)$category_id . "', keyword = 'cat_" . $category_id . "'");
 		}
-
+		
 		$this->cache->delete('category');
 
 		$this->event->trigger('post.admin.category.add', $category_id);

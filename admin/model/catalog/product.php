@@ -122,8 +122,14 @@ class ModelCatalogProduct extends Model {
 			}
 		}
 
-		if (isset($data['keyword'])) {
+		// 产品URL重写
+// 		if (isset($data['keyword'])) {
+// 			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'product_id=" . (int)$product_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
+// 		}
+		if (isset($data['keyword']) && !empty($data['keyword']) && !ctype_space($data['keyword'])) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'product_id=" . (int)$product_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
+		} else {
+			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'product_id=" . (int)$product_id . "', keyword = 'pro_" . $product_id . "'");
 		}
 
 		if (isset($data['product_recurrings'])) {
