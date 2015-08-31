@@ -114,7 +114,7 @@
       <div class="col-sm-8">
       <?php if ($coupon || $voucher || $reward || $shipping) { ?>
       <div class="row">
-      <?php echo $coupon; ?><?php echo $voucher; ?><?php echo $reward; ?><?php echo $shipping; ?>
+      <?php echo $coupon; ?><?php echo $voucher; ?><?php echo $reward; ?>
       </div>
       <?php } ?>
       </div>
