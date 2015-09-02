@@ -25,6 +25,8 @@ $_['entry_text']        = '评论内容：';
 $_['entry_date_added']  = '评论日期';
 $_['entry_good']        = '好评';
 $_['entry_bad']         = '差评';
+// 添加评论回复
+$_['entry_reply'] 		= '回复内容';
 
 // Help
 $_['help_product']      = '(自动完成)';

@@ -1,10 +1,19 @@
 <?php
 class ModelCatalogReview extends Model {
+	
+	const REPLY_CONTENT_EMPTY = "<p><br></p>"; // Summernote富文本编辑器默认空值
+	
 	public function addReview($data) {
 		$this->event->trigger('pre.admin.review.add', $data);
 
-		$this->db->query("INSERT INTO " . DB_PREFIX . "review SET author = '" . $this->db->escape($data['author']) . "', product_id = '" . (int)$data['product_id'] . "', text = '" . $this->db->escape(strip_tags($data['text'])) . "', rating = '" . (int)$data['rating'] . "', status = '" . (int)$data['status'] . "', date_added = NOW()");
+// 		$this->db->query("INSERT INTO " . DB_PREFIX . "review SET author = '" . $this->db->escape($data['author']) . "', product_id = '" . (int)$data['product_id'] . "', text = '" . $this->db->escape(strip_tags($data['text'])) . "', rating = '" . (int)$data['rating'] . "', status = '" . (int)$data['status'] . "', date_added = NOW()");
 
+		// 添加评论回复
+		$reply_text = $this->db->escape(strip_tags($data['reply']));
+		$reply_text_empty = $this->db->escape(strip_tags(self::REPLY_CONTENT_EMPTY));
+		$reply_text = (empty($reply_text) || $reply_text == $reply_text_empty) ? '' : $reply_text;
+		$this->db->query("INSERT INTO " . DB_PREFIX . "review SET author = '" . $this->db->escape($data['author']) . "', product_id = '" . (int)$this->db->escape($data['product_id']) . "', text = '" . $this->db->escape(strip_tags($data['text'])) . "', reply = '" . $reply_text . "', rating = '" . (int)$data['rating'] . "', status = '" . (int)$data['status'] . "', date_added = NOW()");
+		
 		$review_id = $this->db->getLastId();
 
 		$this->cache->delete('product');
@@ -17,7 +26,13 @@ class ModelCatalogReview extends Model {
 	public function editReview($review_id, $data) {
 		$this->event->trigger('pre.admin.review.edit', $data);
 
-		$this->db->query("UPDATE " . DB_PREFIX . "review SET author = '" . $this->db->escape($data['author']) . "', product_id = '" . (int)$data['product_id'] . "', text = '" . $this->db->escape(strip_tags($data['text'])) . "', rating = '" . (int)$data['rating'] . "', status = '" . (int)$data['status'] . "', date_modified = NOW() WHERE review_id = '" . (int)$review_id . "'");
+// 		$this->db->query("UPDATE " . DB_PREFIX . "review SET author = '" . $this->db->escape($data['author']) . "', product_id = '" . (int)$data['product_id'] . "', text = '" . $this->db->escape(strip_tags($data['text'])) . "', rating = '" . (int)$data['rating'] . "', status = '" . (int)$data['status'] . "', date_modified = NOW() WHERE review_id = '" . (int)$review_id . "'");
+		
+		// 更新评论回复
+		$reply_text = $this->db->escape(strip_tags($data['reply']));
+		$reply_text_empty = $this->db->escape(strip_tags(self::REPLY_CONTENT_EMPTY));
+		$reply_text = (empty($reply_text) || $reply_text == $reply_text_empty) ? '' : $reply_text;
+		$this->db->query("UPDATE " . DB_PREFIX . "review SET author = '" . $this->db->escape($data['author']) . "', product_id = '" . (int)$data['product_id'] . "', text = '" . $this->db->escape(strip_tags($data['text'])) . "', reply = '" . $reply_text . "', rating = '" . (int)$data['rating'] . "', status = '" . (int)$data['status'] . "', date_modified = NOW() WHERE review_id = '" . (int)$review_id . "'");
 
 		$this->cache->delete('product');
 

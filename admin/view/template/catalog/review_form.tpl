@@ -54,6 +54,14 @@
               <?php } ?>
             </div>
           </div>
+          <!-- Admin review reply start -->
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-reply"><?php echo $entry_reply; ?></label>
+            <div class="col-sm-10">
+              <textarea name="reply" cols="60" rows="8" id="input-reply" class="form-control"><?php if(!empty($reply)){echo @$reply;} ?></textarea>
+            </div>
+          </div>
+          <!-- Admin review reply end -->
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-name"><?php echo $entry_rating; ?></label>
             <div class="col-sm-10">
@@ -146,5 +154,11 @@ $('input[name=\'product\']').autocomplete({
 		$('input[name=\'product_id\']').val(item['value']);		
 	}	
 });
-//--></script></div>
+//--></script>
+<script type="text/javascript">
+<!--
+$('#input-reply').summernote({height: 150});
+//-->
+</script>
+</div>
 <?php echo $footer; ?>

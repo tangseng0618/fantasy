@@ -661,6 +661,8 @@ class ControllerProductProduct extends Controller {
 		$this->load->model('catalog/review');
 
 		$data['text_no_reviews'] = $this->language->get('text_no_reviews');
+		// 添加评论回复
+		$data['text_reply'] = $this->language->get('text_reply');
 
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
@@ -674,10 +676,12 @@ class ControllerProductProduct extends Controller {
 
 		$results = $this->model_catalog_review->getReviewsByProductId($this->request->get['product_id'], ($page - 1) * 5, 5);
 
+		// 添加评论回复
 		foreach ($results as $result) {
 			$data['reviews'][] = array(
 				'author'     => $result['author'],
 				'text'       => nl2br($result['text']),
+				'reply'      => nl2br($result['reply']),
 				'rating'     => (int)$result['rating'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
 			);

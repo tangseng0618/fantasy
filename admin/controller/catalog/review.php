@@ -405,6 +405,8 @@ class ControllerCatalogReview extends Controller {
 		$data['entry_rating'] = $this->language->get('entry_rating');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_text'] = $this->language->get('entry_text');
+		// 添加评论回复
+		$data['entry_reply'] = $this->language->get('entry_reply');
 
 		$data['help_product'] = $this->language->get('help_product');
 
@@ -434,7 +436,7 @@ class ControllerCatalogReview extends Controller {
 		} else {
 			$data['error_text'] = '';
 		}
-
+		
 		if (isset($this->error['rating'])) {
 			$data['error_rating'] = $this->error['rating'];
 		} else {
@@ -529,6 +531,24 @@ class ControllerCatalogReview extends Controller {
 			$data['text'] = $review_info['text'];
 		} else {
 			$data['text'] = '';
+		}
+		
+		// 添加评论回复
+		if (isset($this->request->post['reply'])) {
+			$data['reply'] = $this->request->post['reply'];
+		} elseif (!empty($review_info)) {
+			$data['reply'] = $review_info['reply'];
+// 			if (array_key_exists('reply', $review_info)) {
+// 				if (empty($data['reply'])) {
+// 					$data['reply'] = '';
+// 				} else {
+// 					$data['reply'] = $review_info['reply'];
+// 				}
+// 			} else {
+// 				$data['reply'] = '';
+// 			}
+		} else {
+			$data['reply'] = '';
 		}
 
 		if (isset($this->request->post['rating'])) {

@@ -9,6 +9,9 @@
   
   
   <div class="text"><?php echo $review['text']; ?></div>
+  <!-- Review reply start -->
+  <?php if ($review['reply'] && $review['reply'] != '&lt;p&gt;&lt;br&gt;&lt;/p&gt;') { ?><br><div style="padding-left: 20px; color: #21C0F0; font-weight: bold;"><?php echo $text_reply; ?></div><div style="padding-left: 20px;"><?php echo html_entity_decode($review['reply']); ?></div><?php } ?>
+  <!-- Review reply end -->
 </div>
 <?php } ?>
 <div class="text-right"><?php echo $pagination; ?></div>

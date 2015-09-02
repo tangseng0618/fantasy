@@ -37,6 +37,8 @@ $_['text_or']             = '- 或 -';
 $_['text_upload']         = '成功上传文件！';
 $_['text_wait']           = '请稍候！';
 $_['text_share']          = '分享';
+// 添加评论回复
+$_['text_reply']          = '商家回复：';
 
 // Entry
 $_['entry_qty']          = '数量：';
