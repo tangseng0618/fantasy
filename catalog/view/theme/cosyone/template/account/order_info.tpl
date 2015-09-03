@@ -85,7 +85,10 @@
       <tr>
      
        
-          <td><?php echo $product['name']; ?>
+          <td>
+          <a href="<?php echo $product['product_link']; ?>" target="_blank">
+          	<?php echo $product['name']; ?>
+          </a>
           <?php foreach ($product['option'] as $option) { ?>
           <br />
           &nbsp;<small> - <?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
