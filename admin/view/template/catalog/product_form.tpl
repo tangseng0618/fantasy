@@ -838,7 +838,14 @@
                   <tfoot>
                     <tr>
                       <td colspan="2"></td>
-                      <td class="text-left"><button type="button" onclick="addImage();" data-toggle="tooltip" title="<?php echo $button_image_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                      <td class="text-left">
+                      	<!--
+                      	<button type="button" onclick="addImage();" data-toggle="tooltip" title="<?php echo $button_image_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button>
+                      	-->
+                      	<!-- Multiple image upload start -->
+                      	<button type="button" onclick="addMultiImage();" data-toggle="tooltip" title="<?php echo $button_image_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button>
+                      	<!-- Multiple image upload end -->
+                      </td>
                     </tr>
                   </tfoot>
                 </table>
@@ -1395,6 +1402,29 @@ function addImage() {
 	
 	image_row++;
 }
+
+// Multiple image upload start
+function addMultiImage() {
+	$('#modal-image').remove();
+	$.ajax({
+		url: 'index.php?route=common/multifilemanager&token=' + getURLVar('token') + '&image_row=' + image_row,
+		dataType: 'html',
+		beforeSend: function() {
+			$('#button-image i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
+			$('#button-image').prop('disabled', true);
+		},
+		complete: function() {
+			$('#button-image i').replaceWith('<i class="fa fa-upload"></i>');
+			$('#button-image').prop('disabled', false);
+		},
+		success: function(html) {
+			$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
+
+			$('#modal-image').modal('show');
+		}
+	});
+}
+// Multiple image upload end
 //--></script> 
   <script type="text/javascript"><!--
 var recurring_row = <?php echo $recurring_row; ?>;
