@@ -710,7 +710,9 @@ class ControllerProductProduct extends Controller {
 		$json = array();
 
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
-			if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 25)) {
+// 			if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 25)) {
+			// 名称最小为2个字符
+			if ((utf8_strlen($this->request->post['name']) < 2) || (utf8_strlen($this->request->post['name']) > 25)) {
 				$json['error'] = $this->language->get('error_name');
 			}
 
