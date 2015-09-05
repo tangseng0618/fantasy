@@ -1,10 +1,11 @@
 <?php
+define('DIR_ADMIN_ROL', 'admin');
 if(!defined('__DIR__'))
     define('__DIR__',dirname(__FILE__));
 
 function get_mainsite_url(){
     $HTTP_SERVER = get_http_server();
-    $url = str_replace('admin/', '', $HTTP_SERVER);
+    $url = str_replace(DIR_ADMIN_ROL . '/', '', $HTTP_SERVER);
     return $url;
 }
 function get_mainsite_dir(){
@@ -100,7 +101,7 @@ global $wpdb;
 
 function rev_site_admin_url(){
     $get_mainsite_url = get_mainsite_url();
-    $url = $get_mainsite_url.'admin/index.php';
+    $url = $get_mainsite_url . DIR_ADMIN_ROL . '/index.php';
     return $url;
 }
 function rev_module_url(){
@@ -112,11 +113,11 @@ function rev_module_ajaxurl(){
     return $url;
 }
 function get_catalog_path($sub_url = ''){
-    $dir_app = str_replace('/admin/', '/catalog/', DIR_APPLICATION);
+    $dir_app = str_replace('/' . DIR_ADMIN_ROL . '/', '/catalog/', DIR_APPLICATION);
     return $dir_app.$sub_url;
 }
 function get_admin_path($sub_url = ''){
-    $dir_app = str_replace('/catalog/', '/admin/', DIR_APPLICATION);
+    $dir_app = str_replace('/catalog/', '/' . DIR_ADMIN_ROL .'/', DIR_APPLICATION);
     return $dir_app.$sub_url;
 }
 function main_shop_url($sub_url = ''){

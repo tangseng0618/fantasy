@@ -1,6 +1,7 @@
 <?php
-  include_once('../../../admin/config.php');
-  include_once('../../../admin/index.php');
+define('DIR_ADMIN_AJAX', 'admin');
+  include_once('../../../' . DIR_ADMIN_AJAX . '/config.php');
+  include_once('../../../' . DIR_ADMIN_AJAX . '/index.php');
   include_once('inc_php/revslider_globals.class.php');
   include_once('revslideropencart_loader.php');
   include_once('revslider_admin.php');
