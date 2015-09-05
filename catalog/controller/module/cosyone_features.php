@@ -52,8 +52,8 @@ class ControllerModuleCosyoneFeatures extends Controller {
 		$data['custom_style_font'] = $this->config->get('cosyone_use_custom_font');
 			
 		if ($data['custom_style_font']) {
-			// http://fonts.googleapis.com/css?family=Exo:300,400,700' rel='stylesheet' type='text/css
-			$this->document->addStyle('//fonts.googleapis.com/css?' . $this->config->get('config_template'));
+			// http://fonts.useso.com/css?family=Exo:300,400,700' rel='stylesheet' type='text/css
+			$this->document->addStyle('//fonts.useso.com/css?' . $this->config->get('config_template'));
 		} else {
 			$this->document->addStyle('catalog/view/theme/default/stylesheet/carousel.css');
 		}

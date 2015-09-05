@@ -18,11 +18,11 @@ class ControllerCommonHeader extends Controller {
 		
 		// New theme start
 		if ($this->config->get('cosyone_use_custom_font')) {
-			$this->document->addStyle('//fonts.googleapis.com/css?family=' . $this->config->get('cosyone_font1_import'));
-			$this->document->addStyle('//fonts.googleapis.com/css?family=' . $this->config->get('cosyone_font2_import'));
+			$this->document->addStyle('//fonts.useso.com/css?family=' . $this->config->get('cosyone_font1_import'));
+			$this->document->addStyle('//fonts.useso.com/css?family=' . $this->config->get('cosyone_font2_import'));
 		} else {
-			$this->document->addStyle('//fonts.googleapis.com/css?family=Roboto:300,400,500,600');
-			$this->document->addStyle('//fonts.googleapis.com/css?family=Roboto+Slab:300,400,600,700');
+			$this->document->addStyle('//fonts.useso.com/css?family=Roboto:300,400,500,600');
+			$this->document->addStyle('//fonts.useso.com/css?family=Roboto+Slab:300,400,600,700');
 		}
 		$data['cosyone_styles'] = $this->load->controller('common/cosyone_styles');
 		$data['cosyone_cookie'] = $this->load->controller('common/cosyone_cookie');

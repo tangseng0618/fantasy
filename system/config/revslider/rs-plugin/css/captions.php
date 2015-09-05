@@ -5,8 +5,8 @@ include_once('../../../../../config.php');
 include_once('../../../../../index.php');
 
 
-require_once '/../../revslideropencart_loader.php';
-require_once '/../../inc_php/framework/include_framework.php';
+require_once '../../revslideropencart_loader.php';
+require_once '../../inc_php/framework/include_framework.php';
 
 
 

@@ -30,7 +30,7 @@ class ControllerModulerevslideropencart extends Controller {
 		$http = get_http();
 		foreach($fonts as $font){
 			if($font !== ''){
-				$url = $http."fonts.googleapis.com/css?family=".strip_tags($font['url']);
+				$url = $http."fonts.useso.com/css?family=".strip_tags($font['url']);
 				$this->document->addStyle($url);
 			}
 		}

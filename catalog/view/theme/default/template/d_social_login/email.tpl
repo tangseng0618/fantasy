@@ -2,7 +2,7 @@
 <head>
   <title>Login</title>
   <link href="catalog/view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-  <script type="text/javascript"  src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script type="text/javascript"  src="//ajax.useso.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
   <script type="text/javascript"  src="<?php echo $http; ?>catalog/view/javascript/d_social_login/jquery.maskedinput.min.js"></script></head>
 <body id="<?php echo $provider ?>">
 <style>

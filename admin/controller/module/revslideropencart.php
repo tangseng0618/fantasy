@@ -1,6 +1,7 @@
 <?php
 require_once DIR_CONFIG . 'revslider/revslideropencart_loader.php'; 
-class ControllerModulerevslideropencart extends Controller {
+// class ControllerModulerevslideropencart extends Controller {
+class ControllerModuleRevslideropencart extends Controller {
 	private $error = array(); 
     public static $wpdb;
     public static $lang_var;
@@ -25,7 +26,7 @@ class ControllerModulerevslideropencart extends Controller {
 		$http = get_http();
 		foreach($fonts as $font){
 			if($font !== ''){
-				$url = $http."fonts.googleapis.com/css?family=".strip_tags($font['url']);
+				$url = $http."fonts.useso.com/css?family=".strip_tags($font['url']);
 				$this->document->addStyle($url);
 			}
 		}

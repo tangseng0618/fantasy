@@ -1136,7 +1136,7 @@
 		$http = get_http();
 		foreach($fonts as $font){
 			if($font !== ''){
-				$csurl = $http."fonts.googleapis.com/css?family=".strip_tags($font['url']);
+				$csurl = $http."fonts.useso.com/css?family=".strip_tags($font['url']);
 				?>
 <link rel='stylesheet' href='<?php echo $csurl; ?>' type='text/css' media='all' />
 				<?php
@@ -1176,7 +1176,7 @@
 
 						<link rel='stylesheet' href='<?php echo $urlPlugin?>css/static-captions.css?rev=<?php echo GlobalsRevSlider::SLIDER_REVISION; ?>' type='text/css' media='all' />
 
-						<script type='text/javascript' src='<?php echo $setBase; ?>ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js'></script>
+						<script type='text/javascript' src='<?php echo $setBase; ?>ajax.useso.com/ajax/libs/jquery/1.8.3/jquery.min.js'></script>
 
 						<script type='text/javascript' src='<?php echo $urlPlugin?>js/jquery.themepunch.tools.min.js?rev=<?php echo GlobalsRevSlider::SLIDER_REVISION; ?>'></script>
 
@@ -1293,7 +1293,7 @@
 			?>
 			<html>
 			<head>
-				<script type='text/javascript' src='<?php echo $setBase; ?>ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js'></script>
+				<script type='text/javascript' src='<?php echo $setBase; ?>ajax.useso.com/ajax/libs/jquery/1.8.3/jquery.min.js'></script>
 			</head>
 			<body style="padding:0px;margin:0px;">
 				<?php if($wpmlActive == true):?>
@@ -1333,7 +1333,7 @@
 
 		if(!empty($my_fonts)){
 			foreach($my_fonts as $c_font){
-				?><link rel='stylesheet' href="<?php echo $http.'fonts.googleapis.com/css?family='.strip_tags($c_font['url']); ?>" type='text/css' /><?php
+				?><link rel='stylesheet' href="<?php echo $http.'fonts.useso.com/css?family='.strip_tags($c_font['url']); ?>" type='text/css' /><?php
 				echo "\n";
 			}
 		}
@@ -1572,7 +1572,7 @@
 			$setBase = get_http();
 
 			if(strpos($font, "href=") === false){ //fallback for old versions
-				return '<link href="'.$setBase.'fonts.googleapis.com/css?family='.$font.'" rel="stylesheet" type="text/css" media="all" />'; //id="rev-google-font"
+				return '<link href="'.$setBase.'fonts.useso.com/css?family='.$font.'" rel="stylesheet" type="text/css" media="all" />'; //id="rev-google-font"
 			}else{
 				$font = str_replace(array('http://', 'https://'), array($setBase, $setBase), $font);
 				return stripslashes($font);

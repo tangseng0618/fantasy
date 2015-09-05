@@ -50,7 +50,7 @@
 
 			$setBase = get_http();
 			
-			$url_jquery = $setBase."ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js?app=revolution";
+			$url_jquery = $setBase."ajax.useso.com/ajax/libs/jquery/1.8.3/jquery.min.js?app=revolution";
 			self::addScriptAbsoluteUrl($url_jquery, "jquery");
 			
 			

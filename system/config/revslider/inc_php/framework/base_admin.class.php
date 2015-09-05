@@ -306,17 +306,17 @@
 			//include jquery ui
 			if(GlobalsRevSlider::$isNewVersion){	//load new jquery ui library
 				
-				wp_enqueue_style('jui-smoothness', '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/jquery-ui.css', array(), null);
+				wp_enqueue_style('jui-smoothness', '//ajax.useso.com/ajax/libs/jqueryui/1.10.1/themes/base/jquery-ui.css', array(), null);
 				if(function_exists("wp_enqueue_media"))
 					wp_enqueue_media();
 			}else{	
-				$urlJqueryUI = "https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js";
+				$urlJqueryUI = "https://ajax.useso.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js";
 				self::addScriptAbsoluteUrl($urlJqueryUI,"jquery-ui");
 			
-				wp_enqueue_style('jui-smoothness', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/base/jquery-ui.css', array(), null);
+				wp_enqueue_style('jui-smoothness', 'http://ajax.useso.com/ajax/libs/jqueryui/1.8.18/themes/base/jquery-ui.css', array(), null);
 			}
 
-			wp_enqueue_script('jquery-ui-custom-js','http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js');
+			wp_enqueue_script('jquery-ui-custom-js','http://ajax.useso.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js');
 
 
 			self::addScriptCommon("settings","unite_settings");

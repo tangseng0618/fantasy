@@ -114,7 +114,7 @@ if(!class_exists('ThemePunch_Fonts')) {
 				$http = get_http();
 				foreach($fonts as $font){
 					if($font !== ''){
-						wp_enqueue_style('tp-'.$font['handle'], $http.'fonts.googleapis.com/css?family='.strip_tags($font['url']));
+						wp_enqueue_style('tp-'.$font['handle'], $http.'fonts.useso.com/css?family='.strip_tags($font['url']));
 					}
 				}
 			}
