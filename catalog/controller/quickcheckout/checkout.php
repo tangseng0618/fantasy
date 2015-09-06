@@ -1,6 +1,10 @@
 <?php  
 class ControllerQuickCheckoutCheckout extends Controller { 
 	public function index() {
+		if (!$this->customer->isLogged()) {
+			$this->response->redirect($this->url->link('account/login', '', 'SSL'));
+		}
+		
 		if ($this->config->get('quickcheckout_load_screen')) {
 			$this->document->addScript('catalog/view/javascript/jquery/quickcheckout/quickcheckout.block.js');
 		}

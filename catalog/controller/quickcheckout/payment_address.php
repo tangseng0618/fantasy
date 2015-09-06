@@ -46,7 +46,8 @@ class ControllerQuickCheckoutPaymentAddress extends Controller {
 		} else {
 			$zone = $this->config->get('quickcheckout_field_zone');
 
-			$data['zone_id'] = $zone['default'];
+// 			$data['zone_id'] = $zone['default'];
+			$data['zone_id'] = '';
 		}
 
 		$this->load->model('localisation/country');
