@@ -4,7 +4,7 @@ class ControllerModuleDAjaxSearch extends Controller {
 		if ($this->config->get('d_ajax_search')) {
 		$d_ajax_search = $this->config->get('d_ajax_search');
 		if ($d_ajax_search['search_on_off']) {
-			$this->document->addScript('catalog/view/javascript/d_ajax_search/d_ajax_search.js');
+// 			$this->document->addScript('catalog/view/javascript/d_ajax_search/d_ajax_search.js');
 			
 			if (file_exists('catalog/view/theme/' . $this->config->get('config_template') . '/stylesheet/d_ajax_search.css')) {
 				$this->document->addStyle('catalog/view/theme/' . $this->config->get('config_template') . '/stylesheet/d_ajax_search.css');
