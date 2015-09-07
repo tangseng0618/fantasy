@@ -172,6 +172,25 @@ a.button.active:hover, input.button.active:hover, #button-confirm:hover, .style-
 	color:#<?php echo $cosyone_button2_hover_color; ?>;
 	border-color:#<?php echo $cosyone_button2_hover_border; ?>;
 }
+/* Header login button */
+.login_drop_heading {
+	background-color:#<?php echo $cosyone_button_background; ?>;
+	border-color:#<?php echo $cosyone_button_border; ?>;
+}
+.login_drop_heading .log_link {
+	color:#<?php echo $cosyone_button_color; ?>;
+}
+/* Other button */
+a.btn, input.btn, button.btn {
+	background-color:#<?php echo $cosyone_button_background; ?>;
+	color:#<?php echo $cosyone_button_color; ?>;
+	border-color:#<?php echo $cosyone_button_border; ?>;
+}
+a.btn:hover, input.btn:hover, button.btn:hover {
+	background-color:#<?php echo $cosyone_button_hover_background; ?>;
+	color:#<?php echo $cosyone_button_hover_color; ?>;
+	border-color:#<?php echo $cosyone_button_hover_border; ?>;
+}
 </style>
 <?php } ?>
 <!-- Custom fonts -->
