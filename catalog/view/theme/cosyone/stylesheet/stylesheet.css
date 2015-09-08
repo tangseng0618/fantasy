@@ -1033,7 +1033,6 @@ a.sq_tag {
 #menu > ul > li > a, .mobile_menu_trigger {
 	font-size:13px;
 	text-shadow: none;
-	text-transform:uppercase;
 	color: #222222;
 	display:block;
 	padding: 0px 20px;
