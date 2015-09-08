@@ -191,6 +191,10 @@ a.btn:hover, input.btn:hover, button.btn:hover {
 	color:#<?php echo $cosyone_button_hover_color; ?>;
 	border-color:#<?php echo $cosyone_button_hover_border; ?>;
 }
+/* One page checkout step number */
+#payment-address .box-heading:before, #shipping-method .box-heading:before, #payment-method .box-heading:before, #cart1 .box-heading:before {
+	background:#<?php echo $cosyone_button_background; ?>;
+}
 </style>
 <?php } ?>
 <!-- Custom fonts -->
